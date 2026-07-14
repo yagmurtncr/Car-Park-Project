@@ -29,6 +29,22 @@ inside every parking rectangle to decide whether a car is present:
 Parking-space coordinates are defined once with the interactive picker and stored in the
 `CarParkPos` file (Python pickle), so `main.py` reuses them on every run.
 
+### Pipeline
+
+```mermaid
+flowchart LR
+    VID["🎥 carPark.mp4 frame"] --> GRAY["Grayscale + Gaussian blur"]
+    GRAY --> THRESH["Adaptive threshold"]
+    THRESH --> MED["Median blur + dilate"]
+    MED --> COUNT["countNonZero per parking box"]
+    POS[("CarParkPos<br/>(saved positions)")] --> COUNT
+    COUNT --> DEC{"count < ~900 ?"}
+    DEC -->|yes| FREE["🟩 Free"]
+    DEC -->|no| BUSY["🟥 Occupied"]
+    FREE --> OUT["Live free-count overlay"]
+    BUSY --> OUT
+```
+
 ---
 
 ## 📁 Project Structure
