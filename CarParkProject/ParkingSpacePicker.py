@@ -16,7 +16,7 @@ def mouseClick (events,x,y,flags,params):
     if events == cv2.EVENT_RBUTTONDOWN:
         for i, pos in enumerate(posList):
             x1,y1 = pos
-            if x1 < x <1 + width and y1 < y <y1 + height:
+            if x1 < x < x1 + width and y1 < y < y1 + height:
                 posList.pop(i)
 
     with open('CarParkPos','wb') as f:
